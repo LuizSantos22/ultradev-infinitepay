@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+
+    <!-- Handle reutilizável: carrega o CSS do formulário -->
+    <ultradev_infinitepay_assets>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/ultradev/infinitepay/checkout.css</stylesheet>
+            </action>
+        </reference>
+    </ultradev_infinitepay_assets>
+
+    <!-- Checkout nativo do OpenMage -->
+    <checkout_onepage_index>
+        <update handle="ultradev_infinitepay_assets"/>
+    </checkout_onepage_index>
+
+    <!-- UltraDev_Checkout: para incluir, repita o bloco abaixo com o handle da página dele
+    <NOME_DO_HANDLE_DO_ULTRADEV_CHECKOUT>
+        <update handle="ultradev_infinitepay_assets"/>
+    </NOME_DO_HANDLE_DO_ULTRADEV_CHECKOUT>
+    -->
+
+</layout>
