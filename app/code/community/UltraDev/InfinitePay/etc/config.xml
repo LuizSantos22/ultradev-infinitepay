@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <UltraDev_InfinitePay>
+            <version>1.0.0</version>
+        </UltraDev_InfinitePay>
+    </modules>
+
+    <global>
+        <models>
+            <ultradev_infinitepay>
+                <class>UltraDev_InfinitePay_Model</class>
+            </ultradev_infinitepay>
+        </models>
+        <blocks>
+            <ultradev_infinitepay>
+                <class>UltraDev_InfinitePay_Block</class>
+            </ultradev_infinitepay>
+        </blocks>
+        <helpers>
+            <ultradev_infinitepay>
+                <class>UltraDev_InfinitePay_Helper</class>
+            </ultradev_infinitepay>
+        </helpers>
+        <resources>
+            <ultradev_infinitepay_setup>
+                <setup>
+                    <module>UltraDev_InfinitePay</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </ultradev_infinitepay_setup>
+        </resources>
+    </global>
+
+    <frontend>
+        <routers>
+            <ultradev_infinitepay>
+                <use>standard</use>
+                <args>
+                    <module>UltraDev_InfinitePay</module>
+                    <frontName>ultradev-infinitepay</frontName>
+                </args>
+            </ultradev_infinitepay>
+        </routers>
+        <layout>
+            <updates>
+                <ultradev_infinitepay>
+                    <file>ultradev/infinitepay.xml</file>
+                </ultradev_infinitepay>
+            </updates>
+        </layout>
+    </frontend>
+
+    <default>
+        <payment>
+            <!-- Configurações globais -->
+            <ultradev_infinitepay>
+                <handle></handle>
+                <debug>0</debug>
+            </ultradev_infinitepay>
+
+            <ultradev_infinitepay_checkout>
+                <active>0</active>
+                <model>ultradev_infinitepay/method_checkout</model>
+                <title>Pix ou Cartão de Crédito (InfinitePay)</title>
+                <order_status>processing</order_status>
+                <pix_enabled>1</pix_enabled>
+                <pix_discount>5</pix_discount>
+                <single_payment>0</single_payment>
+                <send_valid_until>0</send_valid_until>
+                <send_address>0</send_address>
+                <expire_hours>24</expire_hours>
+                <allowspecific>0</allowspecific>
+                <sort_order>5</sort_order>
+            </ultradev_infinitepay_checkout>
+        </payment>
+    </default>
+
+    <crontab>
+        <jobs>
+            <ultradev_infinitepay_check_pending>
+                <schedule><cron_expr>*/15 * * * *</cron_expr></schedule>
+                <run><model>ultradev_infinitepay/observer::checkPendingOrders</model></run>
+            </ultradev_infinitepay_check_pending>
+        </jobs>
+    </crontab>
+</config>
