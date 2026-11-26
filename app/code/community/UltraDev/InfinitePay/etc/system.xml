@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <payment>
+            <groups>
+
+                <!-- Configurações Gerais -->
+                <ultradev_infinitepay translate="label" module="payment">
+                    <label>UltraDev InfinitePay – Configurações Gerais</label>
+                    <sort_order>340</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <fields>
+                        <handle translate="label comment">
+                            <label>InfiniteTag (handle)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Seu usuário no app InfinitePay, sem o símbolo $. Usado na verificação de pagamento (payment_check).</comment>
+                        </handle>
+                        <api_key translate="label comment">
+                            <label>API Key</label>
+                            <frontend_type>obscure</frontend_type>
+                            <backend_model>adminhtml/system_config_backend_encrypted</backend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Gerada em Checkout → Configurações → API Keys no painel InfinitePay. Enviada no header X-Api-Key, somente pelo servidor.</comment>
+                        </api_key>
+                        <debug translate="label comment">
+                            <label>Log de depuração</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Grava payloads e respostas em var/log/ultradev_infinitepay.log. O webhook_url é enviado automaticamente em cada link.</comment>
+                        </debug>
+                    </fields>
+                </ultradev_infinitepay>
+
+                <!-- Método de pagamento -->
+                <ultradev_infinitepay_checkout translate="label" module="payment">
+                    <label>UltraDev InfinitePay – Pix e Cartão (Checkout Integrado)</label>
+                    <sort_order>350</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Ativo</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </active>
+                        <title translate="label">
+                            <label>Título</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <order_status translate="label">
+                            <label>Status após pagamento confirmado</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_order_status_processing</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </order_status>
+                        <pix_enabled translate="label comment">
+                            <label>Aceitar Pix na página de pagamento</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>O cartão de crédito fica sempre disponível. Se "Não", o link é enviado só com cartão.</comment>
+                        </pix_enabled>
+                        <pix_discount translate="label comment">
+                            <label>Desconto no Pix (%)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Maior que 0 e menor que 100. Enviado em options.discounts.pix a cada link. Vazio = sem desconto.</comment>
+                        </pix_discount>
+                        <assured_installments translate="label comment">
+                            <label>Assumir taxas de parcelamento até (x)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>0 a 12. Vazio = não enviar (padrão da conta).</comment>
+                        </assured_installments>
+                        <single_payment translate="label comment">
+                            <label>Link de pagamento único</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Impede reutilizar o mesmo link depois de pago.</comment>
+                        </single_payment>
+                        <send_valid_until translate="label comment">
+                            <label>Enviar validade do link (valid_until)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Usa o prazo de expiração abaixo. Teste o formato de data no playground antes de ativar.</comment>
+                        </send_valid_until>
+                        <send_address translate="label comment">
+                            <label>Pré-preencher endereço no checkout</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Linhas do endereço: 1 rua, 2 número, 3 complemento, 4 bairro.</comment>
+                        </send_address>
+                        <expire_hours translate="label comment">
+                            <label>Cancelar pedido não pago após (horas)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Executado pelo cron a cada 15 min. 0 = nunca cancelar automaticamente.</comment>
+                        </expire_hours>
+                        <sort_order translate="label">
+                            <label>Ordem</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sort_order>
+                    </fields>
+                </ultradev_infinitepay_checkout>
+
+            </groups>
+        </payment>
+    </sections>
+</config>
