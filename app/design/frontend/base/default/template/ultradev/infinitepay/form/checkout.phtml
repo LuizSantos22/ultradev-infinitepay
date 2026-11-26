@@ -1,0 +1,29 @@
+<?php
+/** @var UltraDev_InfinitePay_Block_Form_Checkout $this */
+$_code     = $this->getMethodCode();
+$_discount = $this->getPixDiscountLabel();
+?>
+<ul class="form-list" id="payment_form_<?php echo $this->escapeHtml($_code) ?>" style="display:none;">
+    <li>
+        <div class="ip-box">
+            <p class="ip-title"><?php echo $this->__('Você escolhe a forma de pagamento na próxima etapa') ?></p>
+            <ul>
+                <?php if ($this->isPixEnabled()): ?>
+                <li>
+                    <strong><?php echo $this->__('Pix') ?></strong> – <?php echo $this->__('confirmação em segundos.') ?>
+                    <?php if ($_discount !== ''): ?>
+                        <span class="ip-badge"><?php echo $this->escapeHtml($this->__('%s%% de desconto', $_discount)) ?></span>
+                        <br><small><?php echo $this->__('O desconto é aplicado automaticamente ao escolher Pix na página de pagamento.') ?></small>
+                    <?php endif; ?>
+                </li>
+                <?php endif; ?>
+                <li>
+                    <strong><?php echo $this->__('Cartão de crédito') ?></strong> – <?php echo $this->__('em até 12x. Apple Pay e Google Pay aparecem quando o seu dispositivo for compatível.') ?>
+                </li>
+            </ul>
+            <p class="ip-note">
+                <?php echo $this->__('Ao finalizar o pedido, você será levado ao ambiente seguro da InfinitePay para concluir o pagamento. Os dados do cartão não passam pela nossa loja.') ?>
+            </p>
+        </div>
+    </li>
+</ul>
